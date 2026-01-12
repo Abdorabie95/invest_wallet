@@ -13,8 +13,12 @@ The current folder structure is as follows:
 │   ├── app/                # Main application code (Expo Router)
 │   │   └── index.tsx
 │   ├── components/         # Reusable UI components
+│   │   └── BalanceCard.tsx
+│   │   └── OpportunityCard.tsx
 │   ├── data/               # Data sources / mock data
 │   └── types/              # TypeScript type definitions
+│   └── store/              # Zustand store
+│   └── utils/              # Utility functions
 ├── app.json                # Expo configuration
 ├── index.ts                # App entry point
 ├── package.json            # Project dependencies and scripts
