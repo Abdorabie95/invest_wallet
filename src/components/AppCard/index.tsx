@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Opportunity } from "../../types";
-import { formatCurrency } from "../../app/util/format";
+import { formatCurrency, formatDate } from "../../app/util/format";
 import { styles } from "./style";
 
 const AppCard = ({ item, walletCard }: { item: Opportunity, walletCard?: boolean }) => {
@@ -28,7 +28,7 @@ const AppCard = ({ item, walletCard }: { item: Opportunity, walletCard?: boolean
         </Text>
         <Text style={styles.opportunityDivider}>•</Text>
         <Text style={styles.opportunityDetailText}>
-          {item.duration || item.date} {item.duration ? 'months' : ''}
+          {item.duration || formatDate(item.date as string)} {item.duration ? 'months' : ''}
         </Text>
         <Text style={styles.opportunityDivider}>•</Text>
         {!walletCard && (

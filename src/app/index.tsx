@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
@@ -10,29 +11,43 @@ import BalanceCard from "../components/BalanceCard";
 import { useOpportunitiesStore } from "./store/opportunitiesStore";
 import AppCard from "../components/AppCard";
 import { useUserStore } from "./store/user";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
-  const totalBalance = useUserStore((state) => state.availableBalance + state.investedBalance);
+  const availableBalance = useUserStore((state) => state.availableBalance);
+  const investedBalance = useUserStore((state) => state.investedBalance);
+  const totalBalance = availableBalance + investedBalance;
   const { opportunities } = useOpportunitiesStore();
+  const { bottom } = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
-      <BalanceCard totalBalance={totalBalance} />
-      <View>
-        <Link href="/wallet">View Wallet</Link>
-      </View>
+      <Link href="/wallet" asChild>
+        <TouchableOpacity activeOpacity={0.7}>
+          <BalanceCard
+            totalBalance={totalBalance}
+            availableBalance={availableBalance}
+            investedBalance={investedBalance}
+          />
+        </TouchableOpacity>
+      </Link>
 
-      {/* Investment Opportunities Section */}
       <View style={styles.opportunitiesSection}>
         <Text style={styles.sectionTitle}>Investment Opportunities</Text>
 
-        <FlatList data={opportunities}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <AppCard item={item} />
-          )} />
-      </View>
+        <View style={{ flex: 1 }}>
+          <FlatList data={opportunities}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <AppCard item={item} />
+            )}
+            contentContainerStyle={{ paddingBottom: bottom }}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<Text style={styles.emptyText}>No opportunities available</Text>}
+          />
 
+        </View>
+      </View>
     </View>
   );
 };
@@ -42,9 +57,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0f0f1e",
   },
-  balanceSection: {
-    padding: 20,
-    paddingBottom: 10,
+  emptyText: {
+    color: "#ffffff",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
   },
   sectionTitle: {
     fontSize: 20,
@@ -52,39 +69,10 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginBottom: 16,
   },
-  balanceGrid: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 12,
-  },
-  balanceCard: {
-    flex: 1,
-    backgroundColor: "#1a1a2e",
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#2a2a3e",
-  },
-  totalBalanceCard: {
-    backgroundColor: "#6366f1",
-    borderColor: "#7c3aed",
-  },
-  balanceLabel: {
-    fontSize: 12,
-    color: "#a0a0b0",
-    marginBottom: 8,
-  },
-  balanceAmount: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#ffffff",
-  },
-  totalBalanceAmount: {
-    fontSize: 24,
-  },
   opportunitiesSection: {
     padding: 20,
     paddingTop: 10,
+    flex: 1
   },
 
 });

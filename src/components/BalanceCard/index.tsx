@@ -5,10 +5,12 @@ import { formatCurrency } from "../../app/util/format"
 
 
 interface Props {
-  totalBalance: number
+  totalBalance: number;
+  availableBalance: number;
+  investedBalance: number;
 }
 
-const BalanceCard = ({ totalBalance }: Props) => {
+const BalanceCard = ({ totalBalance, availableBalance, investedBalance }: Props) => {
   return (
     <View style={styles.balanceSection}>
       <Text style={styles.sectionTitle}>Balance Summary</Text>
@@ -17,14 +19,14 @@ const BalanceCard = ({ totalBalance }: Props) => {
         <View style={styles.balanceCard}>
           <Text style={styles.balanceLabel}>Available Balance</Text>
           <Text style={styles.balanceAmount}>
-            {formatCurrency(mockBalance.available)} SAR
+            {formatCurrency(availableBalance)} SAR
           </Text>
         </View>
 
         <View style={styles.balanceCard}>
           <Text style={styles.balanceLabel}>Invested Balance</Text>
           <Text style={styles.balanceAmount}>
-            {formatCurrency(mockBalance.invested)} SAR
+            {formatCurrency(investedBalance)} SAR
           </Text>
         </View>
       </View>

@@ -14,17 +14,21 @@ The current folder structure is as follows:
 │   │   └── index.tsx
 │   ├── components/         # Reusable UI components
 │   │   └── BalanceCard.tsx
-│   │   └── OpportunityCard.tsx
+│   │   └── AppButton.tsx
+│   │   └── AppCard.tsx
 │   ├── data/               # Data sources / mock data
 │   └── types/              # TypeScript type definitions
 │   └── store/              # Zustand store
+│        └── user.ts
+│        └── opportunitiesStore.ts
+│        └── transactionsStore.ts
 │   └── utils/              # Utility functions
 ├── app.json                # Expo configuration
 ├── index.ts                # App entry point
 ├── package.json            # Project dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
 └── README.md               # Project documentation
-```
+``` 
 
 ## Getting Started
 

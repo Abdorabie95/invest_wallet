@@ -5,9 +5,15 @@ import { useUserStore } from "./store/user";
 import { useTransactionsStore } from "./store/transactions";
 import AppCard from "../components/AppCard";
 import { Transaction } from "../types";
-
+import {
+  useSafeAreaInsets,
+  SafeAreaView
+} from 'react-native-safe-area-context';
 const WalletScreen = () => {
-  const totalBalance = useUserStore((state) => state.availableBalance + state.investedBalance);
+  const { bottom } = useSafeAreaInsets();
+  const availableBalance = useUserStore((state) => state.availableBalance);
+  const investedBalance = useUserStore((state) => state.investedBalance);
+  const totalBalance = availableBalance + investedBalance;
   const transactions = useTransactionsStore((state) => state.transactions)
 
   const renderTransactionItem = ({ item }: { item: Transaction }) => {
@@ -22,17 +28,26 @@ const WalletScreen = () => {
 
   return (
     <View style={styles.content}>
-      <BalanceCard totalBalance={totalBalance} />
+      <BalanceCard
+        totalBalance={totalBalance}
+        availableBalance={availableBalance}
+        investedBalance={investedBalance}
+      />
       <View style={styles.section}>
-
         <Text style={styles.sectionTitle}>Transactions</Text>
 
-        <FlatList data={transactions} renderItem={renderTransactionItem} keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{}}
-        />
+        <View style={{ flex: 1 }}>
+          <FlatList
+            data={transactions}
+            renderItem={renderTransactionItem}
+            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={{ paddingBottom: bottom + 20 }}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
 
       </View>
-    </View>
+    </View >
   );
 };
 
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
     color: "#4ade80",
   },
   section: {
-    marginBottom: 24,
+    flex: 1,
     padding: 20,
   },
   sectionTitle: {

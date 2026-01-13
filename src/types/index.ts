@@ -24,7 +24,8 @@ export type TransactionType = 'DEPOSIT' | 'INVEST';
 
 export interface Transaction {
   id: string;
-  type: TransactionType;
-  amount: number;
-  date: string;
+  opportunityId?: string;
+  type?: TransactionType;
+  amount?: number;
+  date?: string;
 }

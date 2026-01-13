@@ -46,6 +46,15 @@ export const mockOpportunities: Opportunity[] = [
     description: 'Regional e-commerce platforms and logistics companies',
     riskLevel: 'medium',
   },
+  {
+    id: '6',
+    name: 'Real Estate Fund B',
+    expectedReturn: 12,
+    duration: 24,
+    minInvestment: 300000,
+    description: 'Diversified real estate portfolio focusing on commercial properties',
+    riskLevel: 'medium',
+  },
 ];
 
 export const mockBalance = {
@@ -59,36 +68,36 @@ export const transactionsMock: Transaction[] = [
     id: '1',
     type: 'DEPOSIT',
     amount: 1500,
-    date: 'Jan 5, 2026',
+    date: '2026-01-05T00:00:00',
   },
   {
     id: '2',
     type: 'INVEST',
     amount: 500,
-    date: 'Jan 10, 2026',
+    date: '2026-01-10T00:00:00',
   },
   {
     id: '3',
     type: 'DEPOSIT',
     amount: 2200,
-    date: 'Jan 15, 2026',
+    date: '2026-01-15T00:00:00',
   },
   {
     id: '4',
     type: 'INVEST',
     amount: 1200,
-    date: 'Jan 18, 2026',
+    date: '2026-01-18T00:00:00',
   },
   {
     id: '5',
     type: 'INVEST',
     amount: 750,
-    date: 'Jan 21, 2026',
+    date: '2026-01-21T00:00:00',
   },
   {
     id: '6',
     type: 'DEPOSIT',
     amount: 3000,
-    date: 'Jan 25, 2026',
+    date: '2026-01-25T00:00:00',
   },
 ];
