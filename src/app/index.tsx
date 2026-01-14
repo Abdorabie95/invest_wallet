@@ -12,6 +12,7 @@ import { useOpportunitiesStore } from "./store/opportunitiesStore";
 import AppCard from "../components/AppCard";
 import { useUserStore } from "./store/user";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTransactionsStore } from "./store/transactions";
 
 const HomeScreen = () => {
   const availableBalance = useUserStore((state) => state.availableBalance);
@@ -19,7 +20,7 @@ const HomeScreen = () => {
   const totalBalance = availableBalance + investedBalance;
   const { opportunities } = useOpportunitiesStore();
   const { bottom } = useSafeAreaInsets();
-
+  
   return (
     <View style={styles.container}>
       <Link href="/wallet" asChild>

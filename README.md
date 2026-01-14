@@ -86,6 +86,6 @@ The application uses **Zustand** for state management, The state is divided into
 
 ## packages used
 
-# zustand
-# react-native-safe-area-context
-# @react-native-async-storage/async-storage
+### zustand
+### react-native-safe-area-context
+### @react-native-async-storage/async-storage
