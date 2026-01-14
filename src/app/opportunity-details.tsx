@@ -2,38 +2,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from "rea
 import React from "react";
 import { useLocalSearchParams } from 'expo-router';
 import { Opportunity } from '../types';
-import { useTransactionsStore } from "./store/transactions";
-import { useUserStore } from "./store/user";
 import AppButton from "../components/AppButton";
+import StatsBox from "../components/statsBox";
+import { useInvestment } from "./hooks/useInvestment";
 
 const OpportunityDetailsScreen = () => {
   const params = useLocalSearchParams();
   const opportunityData: Opportunity = params.item ? JSON.parse(params.item as string) : null;
-  const addTransaction = useTransactionsStore((state) => state.addTransaction);
-  const availableBalance = useUserStore((state) => state.availableBalance);
-  const invest = useUserStore((state) => state.invest);
-  const transactions = useTransactionsStore((state) => state.transactions);
-  const transactionExist = transactions.find((transaction) => transaction.opportunityId === opportunityData.id);
-
-  const handleInvest = () => {
-    if (transactionExist) {
-      Alert.alert('Already Invested', 'You have already invested in this opportunity');
-      return;
-    }
-    if (availableBalance < parseFloat(opportunityData.minInvestment)) {
-      Alert.alert('Insufficient balance', 'You do not have enough balance to invest in this opportunity');
-      return
-    }
-    addTransaction({
-      id: `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      opportunityId: opportunityData.id,
-      amount: parseFloat(opportunityData.minInvestment),
-      date: new Date().toISOString(),
-      type: 'INVEST',
-    })
-    invest(parseFloat(opportunityData.minInvestment));
-    Alert.alert('Investment successful', 'You have successfully invested in this opportunity');
-  }
+  const { handleInvest, isInvested } = useInvestment(opportunityData);
 
   if (!opportunityData) {
     return (
@@ -53,18 +29,9 @@ const OpportunityDetailsScreen = () => {
         </View>
 
         <View style={styles.statsContainer}>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Min. Investment</Text>
-            <Text style={styles.statValue}>{opportunityData.minInvestment}</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Expected Return</Text>
-            <Text style={styles.statValue}>{opportunityData.expectedReturn}</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Duration</Text>
-            <Text style={styles.statValue}>{opportunityData.duration}</Text>
-          </View>
+          <StatsBox label="Min. Investment" value={opportunityData.minInvestment} />
+          <StatsBox label="Expected Return" value={opportunityData.expectedReturn} />
+          <StatsBox label="Duration" value={opportunityData.duration} />
         </View>
 
         <View style={styles.section}>
@@ -76,7 +43,7 @@ const OpportunityDetailsScreen = () => {
 
         <AppButton
           handleInvest={handleInvest}
-          transactionExist={!!transactionExist}
+          transactionExist={isInvested}
           title="Invest Now"
         />
       </View>
@@ -117,24 +84,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     marginBottom: 24,
-  },
-  statBox: {
-    flex: 1,
-    backgroundColor: "#1a1a2e",
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#2a2a3e",
-  },
-  statLabel: {
-    fontSize: 12,
-    color: "#a0a0b0",
-    marginBottom: 8,
-  },
-  statValue: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#ffffff",
   },
   section: {
     marginBottom: 24,

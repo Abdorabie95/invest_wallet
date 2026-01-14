@@ -12,6 +12,10 @@ The current folder structure is as follows:
 ├── src/
 │   ├── app/                # Main application code (Expo Router)
 │   │   └── index.tsx
+│   │   └── opportunity-details.tsx
+│   │   └── wallet.tsx
+│   │   └── hooks/          # Custom hooks
+│   │       └── useInvestment.ts
 │   ├── components/         # Reusable UI components
 │   │   └── BalanceCard.tsx
 │   │   └── AppButton.tsx
@@ -23,6 +27,7 @@ The current folder structure is as follows:
 │        └── opportunitiesStore.ts
 │        └── transactionsStore.ts
 │   └── utils/              # Utility functions
+│        └── format.ts
 ├── app.json                # Expo configuration
 ├── index.ts                # App entry point
 ├── package.json            # Project dependencies and scripts
@@ -69,3 +74,18 @@ You can then run the app on:
 - **React Native**: Mobile application framework.
 - **Expo Router**: File-based routing.
 - **TypeScript**: Static typing.
+
+## State Management
+
+The application uses **Zustand** for state management, The state is divided into three separate stores:
+
+1.  **`user.ts`**: Manages the user's available and invested balance. It provides actions to `invest` (deduct from available, add to invested) and `deposit` (add to available).
+2.  **`transactions.ts`**: Manages the list of transactions (Deposits and Investments). It allows adding new transactions which are displayed in the Wallet screen.
+3.  **`opportunitiesStore.ts`**: Holds the list of available investment opportunities.
+
+
+## packages used
+
+# zustand
+# react-native-safe-area-context
+# @react-native-async-storage/async-storage

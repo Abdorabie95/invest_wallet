@@ -16,6 +16,10 @@ const WalletScreen = () => {
   const totalBalance = availableBalance + investedBalance;
   const transactions = useTransactionsStore((state) => state.transactions)
 
+  const sortedTransactions = React.useMemo(() => {
+    return [...transactions].sort((a, b) => new Date(b.date || '').getTime() - new Date(a.date || '').getTime());
+  }, [transactions]);
+
   const renderTransactionItem = ({ item }: { item: Transaction }) => {
     const transactionItem = { amount: item.amount, date: item.date, type: item.type }
     return (
@@ -38,11 +42,12 @@ const WalletScreen = () => {
 
         <View style={{ flex: 1 }}>
           <FlatList
-            data={transactions}
+            data={sortedTransactions}
             renderItem={renderTransactionItem}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{ paddingBottom: bottom + 20 }}
             showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<Text style={styles.emptyText}>No transactions found</Text>}
           />
         </View>
 
@@ -55,30 +60,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: "#0f0f1e",
-
   },
-  balanceCard: {
-    backgroundColor: "#1a1a2e",
-    padding: 24,
-    borderRadius: 16,
-    marginBottom: 24,
-    borderWidth: 1,
-    borderColor: "#2a2a3e",
-  },
-  balanceLabel: {
-    fontSize: 14,
-    color: "#a0a0b0",
-    marginBottom: 8,
-  },
-  balanceAmount: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: 8,
-  },
-  balanceChange: {
-    fontSize: 14,
-    color: "#4ade80",
+  emptyText: {
+    color: "#d0d0d0",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 20,
   },
   section: {
     flex: 1,
@@ -89,43 +76,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     marginBottom: 16,
-  },
-  holdingCard: {
-    backgroundColor: "#1a1a2e",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#2a2a3e",
-  },
-  holdingInfo: {
-    flex: 1,
-  },
-  holdingName: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#ffffff",
-    marginBottom: 4,
-  },
-  holdingDetails: {
-    fontSize: 14,
-    color: "#a0a0b0",
-  },
-  holdingValue: {
-    alignItems: "flex-end",
-  },
-  holdingAmount: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#ffffff",
-    marginBottom: 4,
-  },
-  holdingProfit: {
-    fontSize: 14,
-    color: "#4ade80",
   },
 });
 
