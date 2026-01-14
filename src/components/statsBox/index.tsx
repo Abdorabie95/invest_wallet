@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 
-const StatsBox = ({ label, value }: { label: string; value: string }) => {
+const StatsBox = ({ label, value }: { label: string; value: string | number }) => {
   return (
     <View style={styles.statBox}>
       <Text style={styles.statLabel}>{label}</Text>
@@ -9,7 +9,7 @@ const StatsBox = ({ label, value }: { label: string; value: string }) => {
   )
 }
 
-export default StatsBox 
+export default StatsBox
 
 const styles = StyleSheet.create({
   statBox: {

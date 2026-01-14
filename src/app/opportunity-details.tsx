@@ -29,9 +29,9 @@ const OpportunityDetailsScreen = () => {
         </View>
 
         <View style={styles.statsContainer}>
-          <StatsBox label="Min. Investment" value={opportunityData.minInvestment} />
-          <StatsBox label="Expected Return" value={opportunityData.expectedReturn} />
-          <StatsBox label="Duration" value={opportunityData.duration} />
+          <StatsBox label="Min. Investment" value={opportunityData?.minInvestment || 0} />
+          <StatsBox label="Expected Return" value={opportunityData?.expectedReturn || 0} />
+          <StatsBox label="Duration" value={opportunityData?.duration || 0} />
         </View>
 
         <View style={styles.section}>

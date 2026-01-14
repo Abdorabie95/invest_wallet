@@ -1,14 +1,14 @@
 export interface Opportunity {
   id: string;
   name: string;
-  expectedReturn: string;
-  duration: string;
-  minInvestment: string;
-  description?: string;
+  expectedReturn?: number | null;
+  duration?: number | null;
+  minInvestment?: number | null;
+  description?: string | null;
   riskLevel?: 'low' | 'medium' | 'high';
-  risk?: string;
+  risk?: string | null;
   overview?: string;
-  amount?: string;
+  amount?: number;
   date?: string;
   type?: string;
 }

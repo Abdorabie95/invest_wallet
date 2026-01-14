@@ -33,7 +33,7 @@ const AppCard = ({ item, walletCard }: { item: Opportunity, walletCard?: boolean
         <Text style={styles.opportunityDivider}>•</Text>
         {!walletCard && (
           <Text style={styles.opportunityDetailText}>
-            Min {formatCurrency(item.minInvestment)} SAR
+            Min {formatCurrency(item.minInvestment as number)} SAR
           </Text>
         )}
       </View>

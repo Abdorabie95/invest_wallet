@@ -12,7 +12,6 @@ import { useOpportunitiesStore } from "./store/opportunitiesStore";
 import AppCard from "../components/AppCard";
 import { useUserStore } from "./store/user";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTransactionsStore } from "./store/transactions";
 
 const HomeScreen = () => {
   const availableBalance = useUserStore((state) => state.availableBalance);
